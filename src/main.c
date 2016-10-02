@@ -48,7 +48,20 @@ SOFTWARE.
 */
 int main(void)
 {
-  int i = 0;
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	//ledka
+	GPIOA->MODER |= (1<<10);
+	GPIOA->MODER &= ~(uint32_t)(1<<11);
+		//
+	GPIOA->OTYPER &= ~(uint32_t)(1<<5);
+		// pull up register
+	GPIOA->PUPDR |= (1<<10);
+	GPIOA->PUPDR &= ~(uint32_t)(1<<11);
+		// 40 mhz speed
+	GPIOA->OSPEEDR |= (1<<10);
+	GPIOA->OSPEEDR |= (1<<11);
+	uint64_t i;
 
   /**
   *  IMPORTANT NOTE!
@@ -73,7 +86,7 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-	i++;
+	  i++;
   }
   return 0;
 }
