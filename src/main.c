@@ -86,7 +86,25 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-	  i++;
+	  //ODR control
+	  /*
+	  GPIOA->ODR |= (1 << 5);
+	  for(i = 0; i<100000;i++);
+	  GPIOA->ODR &= ~(uint32_t)(1<<5);
+	  for(i = 0; i<100000;i++);
+	  */
+
+	  //BSRR control
+	  /*
+	  GPIOA->BSRRH |= (1 << 5);
+	  for(i = 0; i<100000;i++);
+	  GPIOA->BSRRL |= (1 << 5);
+	  for(i = 0; i<100000;i++);
+	  */
+	  //ODR XOR control
+	  GPIOA->ODR ^= (1 << 5);
+	  for(i = 0; i<100000;i++);
+
   }
   return 0;
 }
