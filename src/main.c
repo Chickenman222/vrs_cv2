@@ -56,6 +56,8 @@ uint64_t hranica = 500000;
 uint32_t button_previous=0;
 uint32_t button_current=0;
 uint32_t sum_good_values= 0;
+uint32_t hrana_check = 0;
+
 
 uint32_t button_control(){
 
@@ -150,12 +152,13 @@ int main(void)
 	  for(i = 0; i<100000;i++);
 	  */
 	  //tlacidlo stav
-	  if(button_control())
-		  GPIOA->ODR |= (1 << 5);
-	  else
-		  GPIOA->ODR &= ~(uint32_t)(1<<5);
-
-
+	  if(button_control() && !hrana_check){
+		  GPIOA->ODR ^= (1 << 5);
+		  hrana_check = 1;
+	  }
+	  else if(!button_control()&& hrana_check){
+		  hrana_check = 0;
+	  }
   }
   return 0;
 }
