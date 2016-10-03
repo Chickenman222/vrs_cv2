@@ -48,8 +48,10 @@ SOFTWARE.
 */
 int main(void)
 {
+	//aktivovanie clocku na periferiach
 
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
 	//ledka
 	GPIOA->MODER |= (1<<10);
 	GPIOA->MODER &= ~(uint32_t)(1<<11);
@@ -62,6 +64,19 @@ int main(void)
 	GPIOA->OSPEEDR |= (1<<10);
 	GPIOA->OSPEEDR |= (1<<11);
 	uint64_t i;
+	uint64_t hranica = 100000;
+
+
+	//tlacidlo
+	//netreba je uz v reset state
+	GPIOC->MODER &= ~(uint32_t)(1<<26);
+	GPIOC->MODER &= ~(uint32_t)(1<<27);
+	GPIOC->OTYPER &= ~(uint32_t)(1<<13);
+
+	// output type
+	GPIOC->PUPDR &= ~(uint32_t)(1<<26);
+	GPIOC->PUPDR &= ~(uint32_t)(1<<27);
+	uint32_t BUTTON;
 
   /**
   *  IMPORTANT NOTE!
@@ -87,12 +102,12 @@ int main(void)
   while (1)
   {
 	  //ODR control
-	  /*
+/*
 	  GPIOA->ODR |= (1 << 5);
-	  for(i = 0; i<100000;i++);
+	  for(i = 0; i<hranica;i++);
 	  GPIOA->ODR &= ~(uint32_t)(1<<5);
-	  for(i = 0; i<100000;i++);
-	  */
+	  for(i = 0; i<hranica;i++);
+*/
 
 	  //BSRR control
 	  /*
@@ -102,9 +117,13 @@ int main(void)
 	  for(i = 0; i<100000;i++);
 	  */
 	  //ODR XOR control
+	  /*
 	  GPIOA->ODR ^= (1 << 5);
 	  for(i = 0; i<100000;i++);
-
+	  */
+	  //tlacidlo
+	  //0 zopnute
+	  //1 rozopnute
   }
   return 0;
 }
