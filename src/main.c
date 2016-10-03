@@ -124,6 +124,8 @@ int main(void)
 	  //tlacidlo
 	  //0 zopnute
 	  //1 rozopnute
+
+	  BUTTON = !(GPIOC->IDR & (uint32_t)(1<<13));
   }
   return 0;
 }
