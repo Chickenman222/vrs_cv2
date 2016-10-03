@@ -63,8 +63,7 @@ int main(void)
 		// 40 mhz speed
 	GPIOA->OSPEEDR |= (1<<10);
 	GPIOA->OSPEEDR |= (1<<11);
-	uint64_t i;
-	uint64_t hranica = 100000;
+
 
 
 	//tlacidlo
@@ -76,7 +75,16 @@ int main(void)
 	// output type
 	GPIOC->PUPDR &= ~(uint32_t)(1<<26);
 	GPIOC->PUPDR &= ~(uint32_t)(1<<27);
-	uint32_t BUTTON;
+
+
+	//premenne
+	//sleep
+	uint64_t i;
+	//kontrola buttonu
+	uint64_t hranica = 500000;
+	uint32_t button_previous=0;
+	uint32_t button_current=0;
+	uint8_t sum= 0;
 
   /**
   *  IMPORTANT NOTE!
@@ -99,15 +107,17 @@ int main(void)
 
 
   /* Infinite loop */
+
   while (1)
   {
 	  //ODR control
-/*
 	  GPIOA->ODR |= (1 << 5);
-	  for(i = 0; i<hranica;i++);
+	  for(i = 0; i<hranica;i++){
+	  }
 	  GPIOA->ODR &= ~(uint32_t)(1<<5);
-	  for(i = 0; i<hranica;i++);
-*/
+	  for(i = 0; i<hranica;i++){
+	  }
+
 
 	  //BSRR control
 	  /*
@@ -124,8 +134,6 @@ int main(void)
 	  //tlacidlo
 	  //0 zopnute
 	  //1 rozopnute
-
-	  BUTTON = !(GPIOC->IDR & (uint32_t)(1<<13));
   }
   return 0;
 }
