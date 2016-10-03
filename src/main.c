@@ -46,33 +46,6 @@ SOFTWARE.
 **
 **===========================================================================
 */
-
-
-//premenne
-//sleep
-uint64_t i;
-//kontrola buttonu
-uint64_t hranica = 500000;
-uint32_t button_previous=0;
-uint32_t button_current=0;
-uint32_t sum_good_values= 0;
-
-uint32_t button_control(){
-
-	while(sum_good_values < 20){
-		button_current = !(GPIOC->IDR & (uint32_t)(1<<13));
-		if(button_previous == button_current)
-			sum_good_values++;
-		else
-			sum_good_values = 0;
-		button_previous = !(GPIOC->IDR & (uint32_t)(1<<13));
-		for(i = 0; i<10;i++);
-	}
-	sum_good_values =0;
-	return button_current;
-}
-
-
 int main(void)
 {
 	//aktivovanie clocku na periferiach
@@ -104,6 +77,15 @@ int main(void)
 	GPIOC->PUPDR &= ~(uint32_t)(1<<27);
 
 
+	//premenne
+	//sleep
+	uint64_t i;
+	//kontrola buttonu
+	uint64_t hranica = 500000;
+	uint32_t button_previous=0;
+	uint32_t button_current=0;
+	uint8_t sum= 0;
+
   /**
   *  IMPORTANT NOTE!
   *  See the <system_*.c> file and how/if the SystemInit() function updates 
@@ -128,13 +110,13 @@ int main(void)
 
   while (1)
   {
-	  /*//ODR control
+	  //ODR control
 	  GPIOA->ODR |= (1 << 5);
 	  for(i = 0; i<hranica;i++){
 	  }
 	  GPIOA->ODR &= ~(uint32_t)(1<<5);
 	  for(i = 0; i<hranica;i++){
-	  }*/
+	  }
 
 
 	  //BSRR control
@@ -149,13 +131,9 @@ int main(void)
 	  GPIOA->ODR ^= (1 << 5);
 	  for(i = 0; i<100000;i++);
 	  */
-	  //tlacidlo stav
-	  if(button_control())
-		  GPIOA->ODR |= (1 << 5);
-	  else
-		  GPIOA->ODR &= ~(uint32_t)(1<<5);
-
-
+	  //tlacidlo
+	  //0 zopnute
+	  //1 rozopnute
   }
   return 0;
 }
