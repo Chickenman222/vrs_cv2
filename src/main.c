@@ -55,6 +55,7 @@ uint64_t i;
 uint64_t hranica = 500000;
 uint32_t button_previous=0;
 uint32_t button_current=0;
+
 uint32_t sum_good_values= 0;
 uint32_t hrana_check = 0;
 
@@ -96,6 +97,8 @@ int main(void)
 
 
 	//tlacidlo
+	uint32_t button=0;
+
 	//netreba je uz v reset state
 	GPIOC->MODER &= ~(uint32_t)(1<<26);
 	GPIOC->MODER &= ~(uint32_t)(1<<27);
@@ -138,7 +141,7 @@ int main(void)
 	  for(i = 0; i<hranica;i++){
 	  }*/
 
-
+	  //button = !(GPIOC->IDR & (uint32_t)(1<<13));
 	  //BSRR control
 	  /*
 	  GPIOA->BSRRH |= (1 << 5);
