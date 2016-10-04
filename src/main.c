@@ -75,6 +75,21 @@ uint32_t button_control(){
 	return button_current;
 }
 
+uint32_t button_control_library(){
+
+	while(sum_good_values < 20){
+		button_current = !GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_13);
+		if(button_previous == button_current)
+			sum_good_values++;
+		else
+			sum_good_values = 0;
+		button_previous = !GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_13);
+		for(i = 0; i<10;i++);
+	}
+	sum_good_values =0;
+	return button_current;
+}
+
 int main(void)
 {
 	//aktivovanie clocku na periferiach
@@ -164,12 +179,12 @@ int main(void)
 	  GPIO_ResetBits(GPIOA,GPIO_Pin_5);
 	  for(i = 0; i<hranica;i++);*/
 
-	  GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
+	 /* GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
 	  for(i = 0; i<hranica;i++);
 
-/*
+
 	  BUTTON = !GPIO_ReadInputDataBit(GPIOC,GPIO_BUTTON.GPIO_Pin);
-*/
+      */
 	  /*//ODR control
 	  GPIOA->ODR |= (1 << 5);
 	  for(i = 0; i<hranica;i++){
@@ -200,6 +215,21 @@ int main(void)
 		  hrana_check = 0;
 	  }
 	  */
+	  /*
+	  if(button_control() && !hrana_check){
+		  GPIOA->ODR ^= (1 << 5);
+		  hrana_check = 1;
+	  }
+	  else if(!button_control()&& hrana_check){
+		  hrana_check = 0;
+	  }*/
+	  if( button_control_library()){
+		  GPIO_SetBits(GPIOA,GPIO_LED.GPIO_Pin);
+	  }
+	  else{
+		  GPIO_ResetBits(GPIOA,GPIO_LED.GPIO_Pin);
+	  }
+
 
 	  //SPRACOVANIE ZADANIA POMOCOU KNIZNIC
 
