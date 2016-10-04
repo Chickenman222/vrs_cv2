@@ -75,15 +75,15 @@ uint32_t button_control(){
 	return button_current;
 }
 
-
 int main(void)
 {
 	//aktivovanie clocku na periferiach
 
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
+	//RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
 	//ledka
-	GPIOA->MODER |= (1<<10);
+
+	/*GPIOA->MODER |= (1<<10);
 	GPIOA->MODER &= ~(uint32_t)(1<<11);
 		//
 	GPIOA->OTYPER &= ~(uint32_t)(1<<5);
@@ -106,8 +106,23 @@ int main(void)
 
 	// output type
 	GPIOC->PUPDR &= ~(uint32_t)(1<<26);
-	GPIOC->PUPDR &= ~(uint32_t)(1<<27);
+	GPIOC->PUPDR &= ~(uint32_t)(1<<27);*/
 
+
+	//TO ISTE NASTAVENIE S POUZITIM KNIZNIC
+
+
+	GPIO_InitTypeDef GPIO_LED;
+	GPIO_LED.GPIO_Pin = GPIO_Pin_5;
+	GPIO_LED.GPIO_Mode = GPIO_Mode_OUT;
+
+	GPIO_LED.GPIO_OType = GPIO_OType_PP;
+
+	GPIO_LED.GPIO_PuPd = GPIO_PuPd_UP;
+
+	GPIO_LED.GPIO_Speed = GPIO_Speed_40MHz;
+
+	GPIO_Init(GPIOA,&GPIO_LED);
 
   /**
   *  IMPORTANT NOTE!
@@ -133,6 +148,13 @@ int main(void)
 
   while (1)
   {
+
+	  GPIO_SetBits(GPIOA,GPIO_LED.GPIO_Pin);
+	  for(i = 0; i<hranica;i++);
+	  GPIO_ResetBits(GPIOA,GPIO_Pin_5);
+	  for(i = 0; i<hranica;i++);
+
+
 	  /*//ODR control
 	  GPIOA->ODR |= (1 << 5);
 	  for(i = 0; i<hranica;i++){
@@ -153,7 +175,7 @@ int main(void)
 	  /*
 	  GPIOA->ODR ^= (1 << 5);
 	  for(i = 0; i<100000;i++);
-	  */
+
 	  //tlacidlo stav
 	  if(button_control() && !hrana_check){
 		  GPIOA->ODR ^= (1 << 5);
@@ -162,6 +184,10 @@ int main(void)
 	  else if(!button_control()&& hrana_check){
 		  hrana_check = 0;
 	  }
+	  */
+
+	  //SPRACOVANIE ZADANIA POMOCOU KNIZNIC
+
   }
   return 0;
 }
