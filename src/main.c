@@ -148,12 +148,14 @@ int main(void)
 
   while (1)
   {
-
+/*
 	  GPIO_SetBits(GPIOA,GPIO_LED.GPIO_Pin);
 	  for(i = 0; i<hranica;i++);
 	  GPIO_ResetBits(GPIOA,GPIO_Pin_5);
-	  for(i = 0; i<hranica;i++);
+	  for(i = 0; i<hranica;i++);*/
 
+	  GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
+	  for(i = 0; i<hranica;i++);
 
 	  /*//ODR control
 	  GPIOA->ODR |= (1 << 5);
