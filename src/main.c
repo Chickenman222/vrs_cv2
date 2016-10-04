@@ -223,11 +223,19 @@ int main(void)
 	  else if(!button_control()&& hrana_check){
 		  hrana_check = 0;
 	  }*/
-	  if( button_control_library()){
+
+	  /*if( button_control_library()){
 		  GPIO_SetBits(GPIOA,GPIO_LED.GPIO_Pin);
 	  }
 	  else{
 		  GPIO_ResetBits(GPIOA,GPIO_LED.GPIO_Pin);
+	  }*/
+	  if(button_control_library() && !hrana_check){
+		  GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
+		  hrana_check = 1;
+	  }
+	  else if(!button_control_library()&& hrana_check){
+		  hrana_check = 0;
 	  }
 
 
