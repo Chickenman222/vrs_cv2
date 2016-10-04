@@ -163,13 +163,13 @@ int main(void)
 	  for(i = 0; i<hranica;i++);
 	  GPIO_ResetBits(GPIOA,GPIO_Pin_5);
 	  for(i = 0; i<hranica;i++);*/
-/*
+
 	  GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
 	  for(i = 0; i<hranica;i++);
-	  */
 
+/*
 	  BUTTON = !GPIO_ReadInputDataBit(GPIOC,GPIO_BUTTON.GPIO_Pin);
-
+*/
 	  /*//ODR control
 	  GPIOA->ODR |= (1 << 5);
 	  for(i = 0; i<hranica;i++){
