@@ -79,8 +79,10 @@ int main(void)
 {
 	//aktivovanie clocku na periferiach
 
+	uint8_t BUTTON =0;
+
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-	//RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
 	//ledka
 
 	/*GPIOA->MODER |= (1<<10);
@@ -111,18 +113,26 @@ int main(void)
 
 	//TO ISTE NASTAVENIE S POUZITIM KNIZNIC
 
-
+	//LED
 	GPIO_InitTypeDef GPIO_LED;
 	GPIO_LED.GPIO_Pin = GPIO_Pin_5;
 	GPIO_LED.GPIO_Mode = GPIO_Mode_OUT;
-
 	GPIO_LED.GPIO_OType = GPIO_OType_PP;
-
 	GPIO_LED.GPIO_PuPd = GPIO_PuPd_UP;
-
 	GPIO_LED.GPIO_Speed = GPIO_Speed_40MHz;
-
 	GPIO_Init(GPIOA,&GPIO_LED);
+
+
+	//BUTTON
+	GPIO_InitTypeDef GPIO_BUTTON;
+	GPIO_BUTTON.GPIO_Pin = GPIO_Pin_13;
+	GPIO_BUTTON.GPIO_Mode = GPIO_Mode_IN;
+	GPIO_BUTTON.GPIO_OType = GPIO_OType_PP;
+	GPIO_BUTTON.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOC,&GPIO_BUTTON);
+
+
+
 
   /**
   *  IMPORTANT NOTE!
@@ -153,9 +163,12 @@ int main(void)
 	  for(i = 0; i<hranica;i++);
 	  GPIO_ResetBits(GPIOA,GPIO_Pin_5);
 	  for(i = 0; i<hranica;i++);*/
-
+/*
 	  GPIO_ToggleBits(GPIOA,GPIO_Pin_5);
 	  for(i = 0; i<hranica;i++);
+	  */
+
+	  BUTTON = !GPIO_ReadInputDataBit(GPIOC,GPIO_BUTTON.GPIO_Pin);
 
 	  /*//ODR control
 	  GPIOA->ODR |= (1 << 5);
